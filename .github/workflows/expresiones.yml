@@ -8,20 +8,19 @@ on:
         required: true
         type: integer
       nombre:
-        description: 'Juan Antonio'
+        description: 'Nombre del usuario'
         required: true
         default: 'Juan'
         type: string
+
 jobs:
-  mayor:
-    if: ${{ inputs.edad >= 18 }} 
+  evaluar:
     runs-on: ubuntu-latest
     steps:
-      - name: Correr script
-        run: echo ${{ inputs.nombre }} es mayor de edad
-  menor:
-    if: ${{ inputs.edad < 18 }} 
-    runs-on: ubuntu-latest
-    steps:
-      - name: Correr script
-        run: echo ${{ inputs.nombre }} es menor de edad
+      - name: Evaluar edad
+        run: |
+          if [ "${{ github.event.inputs.edad }}" -ge 18 ]; then
+            echo "${{ github.event.inputs.nombre }} es mayor de edad"
+          else
+            echo "${{ github.event.inputs.nombre }} es menor de edad"
+          fi
